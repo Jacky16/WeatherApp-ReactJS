@@ -32,8 +32,8 @@ const WelcomeScreen = ({children}) => {
         }
     },[vanta])//Con esto me aseguro que siga funcionando bien
     return (
-        <div ref={myRefDiv}>
-            WelcomeScreen
+        <div className="full" ref={myRefDiv}>
+            {children}
         </div>
     )
 }
