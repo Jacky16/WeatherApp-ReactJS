@@ -3,10 +3,10 @@ import CityList from "./CityList"
 import {render,fireEvent} from "@testing-library/react"
 
 const cities =[
-    {city:"Barcelona",country:"España"},
-    {city:"Madrid",country:"España"},
-    {city:"Buenos Aires",country:"Argentina"},
-    {city:"Pyonjang",country:"Kore del norte"},
+    {city:"Barcelona",country:"España",countryCode:"ES"},
+    {city:"Madrid",country:"España",countryCode:"ES"},
+    {city:"Buenos Aires",country:"Argentina",countryCode:"AR"},
+    {city:"London",country:"England",countryCode:"UK"}
 ]
 test("City test renders", async () =>{
     const citiesCount = 4;
