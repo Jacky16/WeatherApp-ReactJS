@@ -1,10 +1,10 @@
 import React from 'react'
+import 'typeface-roboto'
 import CityInfo from './CityInfo'
-import "typeface-roboto"
 
-export default{
-    title:"CityInfo",
+export default {
+    title: "CityInfo",
     component: CityInfo
 }
-export const CityExample = () => 
-<CityInfo city={"Barcelona"} country={"España"}/>
+
+export const CityExample = () => (<CityInfo city={"Buenos Aires"} country={"Argentina"}></CityInfo>)

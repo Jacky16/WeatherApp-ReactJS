@@ -1,25 +1,28 @@
 import React from 'react'
-import { BrowserRouter as Router,Route,Switch} from 'react-router-dom'
+import { BrowserRouter as Router,
+    Switch, 
+    Route } from 'react-router-dom'
 import WelcomePage from './pages/WelcomePage'
-import MainPage from "./pages/MainPage"
+import MainPage from './pages/MainPage'
 import CityPage from './pages/CityPage'
-import  NotFoundPage from './pages/NotFoundPage'
-const App = props => {
+import NotFoundPage from './pages/NotFoundPage'
+
+const App = () => {
     return (
-        <Router>  
+        <Router>
             <Switch>
-                <Route exact path ="/">
-                <WelcomePage/>
+                <Route exact path="/">
+                    <WelcomePage />
                 </Route>
                 <Route path="/main">
-                    <MainPage/>
-                </Route>
-                <Route path="/city">
-                <CityPage/>
-                </Route>
-                <Route >
-                <NotFoundPage/>
-                </Route>
+                    <MainPage />
+                </Route>      
+                <Route path="/city/:countryCode/:city">
+                    <CityPage />
+                </Route> 
+                <Route>
+                    <NotFoundPage />
+                </Route>                                                           
             </Switch>
         </Router>
     )

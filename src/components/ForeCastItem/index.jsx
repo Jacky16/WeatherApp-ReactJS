@@ -1,1 +1,1 @@
-export{default}from "./ForeCastItem"
+export { default } from './ForecastItem'

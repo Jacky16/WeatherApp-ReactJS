@@ -1,19 +1,6 @@
-import React from "react"
-import{findByText, render} from "@testing-library/react"
-import ForeCastItem from "./ForeCastItem"
+// import React from 'react'
 
-test("ForeCastItem render",async ()=>{
-    const {findBytext} = render(<ForeCastItem hour={10} state="sunny" temperature={23} weekDay="Lunes"/>)
-    
-    const hour = await findByText("/10/");
-    const state = await findByText("sunny");
-    const temperature = await findByText(/23/);
-    const weekDay = weekDay="Lunes"
+test('ForecastItem render', () => {
+    // Tarea, se deben renderizar los diferentes textos
 
-    expect(hour).toHaveTextContent(/10/);
-    expect(state).toHaveTextContent("sunny");
-    expect(temperature).toHaveTextContent(/23/);
-    expect(weekDay).toHaveTextContent("Lunes");
-
-
-});
+})

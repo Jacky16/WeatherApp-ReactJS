@@ -1,45 +1,45 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid,AppBar,Toolbar,IconButton,Link} from '@material-ui/core'
-import { IconContext} from 'react-icons'
+import AppBar from '@material-ui/core/AppBar'
+import IconButton from '@material-ui/core/IconButton'
+import { IconContext } from 'react-icons'
+import Grid from '@material-ui/core/Grid'
+import Link from '@material-ui/core/Link'
+import { Link as LinkRouter } from 'react-router-dom'
+import Typography from '@material-ui/core/Typography'
+import Toolbar from '@material-ui/core/Toolbar'
 import { WiDaySunny } from 'react-icons/wi'
-import {Link as LinkRouter} from "react-router-dom"
-import { Typography } from '@material-ui/core'
+import ErrorBoundary from './../../generic/ErrorBoundary'
 
-const AppFrame = ({children}) => {
+const AppFrame = ({ children }) => {
     return (
         <Grid container
-            justify="center"
-        >
+            justify="center">
             <AppBar position="static">
                 <Toolbar variant="dense">
-                    <IconButton 
-                    color="inherit"
-                     aria-label="menu">
+                    <IconButton color="inherit" aria-label="menu">
                         <Link 
-                        component={LinkRouter}
-                        to="/main"
-                         color="inherit" 
-                         aria-label="menu">
-
-                            <IconContext.Provider value={{size:"2em"}}>
-                                <WiDaySunny></WiDaySunny>
+                            component={LinkRouter}
+                            to="/main" 
+                            color="inherit" 
+                            aria-label="menu">
+                            <IconContext.Provider value={{size:'2em'}}>
+                                <WiDaySunny />
                             </IconContext.Provider>
-
                         </Link>
                     </IconButton>
                     <Typography variant="h6" color="inherit">
                         Weather App
                     </Typography>
                 </Toolbar>
-            </AppBar>     
+            </AppBar>
             <Grid item
-                xs={12}       
+                xs={12}
                 sm={11}
                 md={10}
                 lg={8}>
-                    {children}
-                </Grid>
+                <ErrorBoundary>{children}</ErrorBoundary>
+            </Grid>
         </Grid>
     )
 }
