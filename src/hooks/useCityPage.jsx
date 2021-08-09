@@ -1,58 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, useDebugValue } from 'react'
 import axios from 'axios'
-import moment from 'moment'
-
 import { useParams } from 'react-router-dom'
-import { getForecastUrl } from '../utils/urls'
-import { toCelcius } from '../utils/utils'
+import { getForecastUrl } from './../utils/urls'
+import getChartData from './../utils/transform/getChartData'
+import getForecastItemList from './../utils/transform/getForecastItemList'
 
-const useCityPage = () =>{
-    const [charData, setCharData] = useState(null)
+const useCityPage = () => {
+    const [chartData, setChartData] = useState(null)
     const [forecastItemList, setForecastItemList] = useState(null)
 
     const { city, countryCode } = useParams()
 
+    useDebugValue(`useCityPage ${city}`)
+
     useEffect(() => {
         const getForecast = async () => {
-
-            const url = getForecastUrl({city,countryCode});
+            const url = getForecastUrl({ city, countryCode })
 
             try {
-                const { data: charData } = await axios.get(url)
+                const { data } = await axios.get(url)
+                
+                const dataAux = getChartData(data)
 
-                console.log("data", charData)
+                setChartData(dataAux)
 
-                const daysAhead = [0, 1, 2, 3, 4, 5]
-                const days = daysAhead.map(d => moment().add(d, 'd'))
-                const dataAux = days.map(day => {
-                    debugger
-                    const tempObjArray = charData.list.filter(item => {
-                        const dayOfYear = moment.unix(item.dt).dayOfYear()
-                        return dayOfYear === day.dayOfYear()
-                    })
-                    console.log("day.dayOfYear()", day.dayOfYear())
-                    console.log("tempObjArray", tempObjArray)
+                const forecastItemListAux = getForecastItemList(data)
 
-                    const temps = tempObjArray.map(item => item.main.temp)
-                    // dayHour, min, max
-                    return ({
-                        dayHour: day.format('ddd'), 
-                        min: toCelcius(Math.min(...temps)), 
-                        max: toCelcius(Math.max(...temps))
-                    })
-                })
-                const interval = [4,8,12,16,20,24];
-                const forecastItemListAux = charData.list
-                .filter((item,index) => interval.includes(index))
-                .map(item =>{
-                    return({
-                        hour: moment.unix(item.dt).hour(),
-                        weekDay: moment.unix(item.dt).format("dddd"),
-                        state: item.weather[0].main.toLowerCase(),
-                        temperature: toCelcius(item.main.temp)
-                    })
-                })
-                setCharData(dataAux)
                 setForecastItemList(forecastItemListAux)            
             } catch (error) {
                 console.log(error)            
@@ -62,6 +35,8 @@ const useCityPage = () =>{
         getForecast()
 
     }, [city, countryCode])
-    return {city,charData,forecastItemList}
+
+    return { city, countryCode, chartData, forecastItemList }
 }
+
 export default useCityPage

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import useCityList from '../../hooks/useCityList'
 import Alert from '@material-ui/lab/Alert'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
+import useCityList from './../../hooks/useCityList'
 import CityInfo from './../CityInfo'
 import Weather from './../Weather'
-import { getCityCode } from '../../utils/utils'
+import { getCityCode } from './../../utils/utils'
+
 
 // li: es un item (según tag html, tiene el role "listitem")
 // renderCityAndCountry se va a convertir en una función que retorna otra función
@@ -44,8 +45,9 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 // cities: es un array, y en cada item tiene que tener la ciudad, pero además el country
 // ul: tag html para listas no ordenadas
 const CityList = ({ cities, onClickCity }) => {
-   
-    const {allWeather,error,setError} = useCityList(cities);
+
+    const { allWeather, error, setError } = useCityList(cities)
+    
     return (
         <div>
             {
