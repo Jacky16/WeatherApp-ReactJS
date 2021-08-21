@@ -14,6 +14,7 @@ import { getCityCode } from './../../utils/utils'
 // renderCityAndCountry se va a convertir en una función que retorna otra función
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
     const { city, countryCode, country } = cityAndCountry
+    
     // const { temperature, state } = weather
 
     return (
