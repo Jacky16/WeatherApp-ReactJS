@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Grid from '@material-ui/core/Grid'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import AppFrame from './../components/AppFrame'
@@ -12,14 +12,20 @@ import useCityList from './../hooks/useCityList'
 import { getCityCode } from './../utils/utils'
 import { getCountryNameByCountryCode } from './../utils/serviceCities'
 
-const CityPage = ({onSetAllWeather,allWeather}) => {
-    const { city, countryCode, chartData, forecastItemList } = useCityPage()
+const CityPage = ({actions, data}) => {
+    const { allWeather, allChartData, allForecastItemList } = data
+    const { onSetAllWeather, onSetChartData, onSetForecastItemList } = actions
+    const { city, countryCode } = useCityPage(allChartData, allForecastItemList, onSetChartData, onSetForecastItemList)
 
-    const cities = React.useMemo(() =>([{city,countryCode}]),[city,countryCode])
+    const cities = useMemo(() => ([{ city, countryCode }]), [city, countryCode])
 
-    useCityList(cities,onSetAllWeather)
+    useCityList(cities, allWeather, onSetAllWeather)
+    
+    const cityCode = getCityCode(city, countryCode)
 
-    const weather = allWeather[getCityCode(city, countryCode)]
+    const weather = allWeather[cityCode]
+    const chartData = allChartData[cityCode]
+    const forecastItemList = allForecastItemList[cityCode]
 
     const country = countryCode && getCountryNameByCountryCode(countryCode)
     const humidity = weather && weather.humidity

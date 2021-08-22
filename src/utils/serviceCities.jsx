@@ -1,8 +1,8 @@
 const cities = [
-    { city: "Buenos Aires", country: "Argentina", countryCode: "AR"},
-    { city: "Bogotá", country: "Colombia", countryCode: "CO"},
     { city: "Barcelona", country: "España", countryCode: "ES"},
-    { city: "Ciudad de México", country: "México", countryCode: "MX"},
+    { city: "Madrid", country: "Epaña", countryCode: "ES"},
+    { city: "London", country: "United Kingdom", countryCode: "UK"},
+    { city: "Arenys de mar", country: "España", countryCode: "ES"},
 ]
 
 export const getCities = () => (cities)

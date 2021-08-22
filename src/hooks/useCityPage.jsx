@@ -1,14 +1,12 @@
-import { useState, useEffect, useDebugValue } from 'react'
+import { useEffect, useDebugValue } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { getForecastUrl } from './../utils/urls'
 import getChartData from './../utils/transform/getChartData'
 import getForecastItemList from './../utils/transform/getForecastItemList'
+import { getCityCode } from './../utils/utils'
 
-const useCityPage = () => {
-    const [chartData, setChartData] = useState(null)
-    const [forecastItemList, setForecastItemList] = useState(null)
-
+const useCityPage = (allChartData, allForecastItemList, onSetChartData, onSetForecastItemList) => {
     const { city, countryCode } = useParams()
 
     useDebugValue(`useCityPage ${city}`)
@@ -16,27 +14,31 @@ const useCityPage = () => {
     useEffect(() => {
         const getForecast = async () => {
             const url = getForecastUrl({ city, countryCode })
-
+            const cityCode = getCityCode(city, countryCode)
             try {
                 const { data } = await axios.get(url)
                 
                 const dataAux = getChartData(data)
 
-                setChartData(dataAux)
+                onSetChartData({ [cityCode]: dataAux })
 
                 const forecastItemListAux = getForecastItemList(data)
 
-                setForecastItemList(forecastItemListAux)            
+                onSetForecastItemList({ [cityCode]: forecastItemListAux })            
             } catch (error) {
                 console.log(error)            
             }
         }
+        const cityCode = getCityCode(city, countryCode)
 
-        getForecast()
+        if (allChartData && allForecastItemList && !allChartData[cityCode] && !allForecastItemList[cityCode]) {
+            getForecast()
+        }
+        
 
-    }, [city, countryCode])
+    }, [city, countryCode, onSetChartData, onSetForecastItemList, allChartData, allForecastItemList])
 
-    return { city, countryCode, chartData, forecastItemList }
+    return { city, countryCode }
 }
 
 export default useCityPage

@@ -14,7 +14,6 @@ import { getCityCode } from './../../utils/utils'
 // renderCityAndCountry se va a convertir en una función que retorna otra función
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
     const { city, countryCode, country } = cityAndCountry
-    
     // const { temperature, state } = weather
 
     return (
@@ -44,9 +43,12 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 }
 
 // cities: es un array, y en cada item tiene que tener la ciudad, pero además el country
-const CityList = ({ cities, onClickCity,onSetAllWeather,allWeather }) => {
+// ul: tag html para listas no ordenadas
+const CityList = ({ cities, onClickCity, actions, data }) => {
+    const { allWeather } = data
+    const { onSetAllWeather } = actions
 
-    const {error, setError } = useCityList(cities,onSetAllWeather)
+    const { error, setError } = useCityList(cities, allWeather, onSetAllWeather)
     
     return (
         <div>
